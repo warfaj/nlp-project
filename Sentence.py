@@ -3,7 +3,7 @@ from nltk.parse import stanford
 from nltk import word_tokenize, pos_tag
 from nltk.tag.stanford import StanfordNERTagger
 
-class Sentence:
+class Sentence(object):
 
     def __init__(self, raw_sentence, id):
         self.id = id
