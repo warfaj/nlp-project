@@ -4,6 +4,7 @@
     <list default="true" id="4d24ad4e-0f5c-4ddd-ba53-25324569c8db" name="Default" comment="" />
     <ignored path="NLPProject.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,11 +31,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="answer.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="answer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/answer.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Sentence.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Sentence.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="26" column="123" selection-start-line="26" selection-start-column="123" selection-end-line="26" selection-end-column="123" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stanford.py" pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Python/2.7/site-packages/nltk/parse/stanford.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="404">
+              <caret line="179" column="22" selection-start-line="179" selection-start-column="14" selection-end-line="179" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -65,6 +88,7 @@
         <option value="$PROJECT_DIR$/ask.py" />
         <option value="$PROJECT_DIR$/Retriever.py" />
         <option value="$PROJECT_DIR$/answer.py" />
+        <option value="$PROJECT_DIR$/Sentence.py" />
       </list>
     </option>
   </component>
@@ -424,8 +448,26 @@
     <entry file="file://$PROJECT_DIR$/answer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/nltk/parse/stanford.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="179" column="22" selection-start-line="179" selection-start-column="14" selection-end-line="179" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sentence.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="123" selection-start-line="26" selection-start-column="123" selection-end-line="26" selection-end-column="123" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
