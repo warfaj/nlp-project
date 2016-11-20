@@ -1,42 +1,47 @@
 from bs4 import BeautifulSoup
 from nltk import tokenize
-
-
-class Sentence:
-    def __init__(self, sID, raw_text):
-        self.sID = sID
-        self.raw_text = raw_text
+from parse import Parse
+from Question import Question
 
 
 class Information_Retrieval:
     def __init__(self, article):
         self.article_name = article
-        self.article = self.parse_html()
-
-    def parse_html(self):
-        sentence_arr = []
-
-        with open(self.article_name) as art:
-            soup = BeautifulSoup(art, "html.parser")
-        art.close()
-        all_paras = soup.find_all('p')
-        paragraphs = []
-        for para in all_paras:
-            paragraphs.append(para.get_text())
-        content = ""
-        for para in all_paras:
-            content += para.get_text()
-        content = content.encode('ascii', 'ignore')
-        sentences = tokenize.sent_tokenize(content)
-        counter = 0
-        for sent in sentences:
-            instance = Sentence("s" + str(counter), sent)
-            counter += 1
-            sentence_arr.append(instance)
-        return sentence_arr
+        self.article = Parse(open(article, 'r').read())
 
     def ranked_list(self, question):
-        return None
+        relevant_sentences = dict()
+        for (word,tag) in question.pos_tags:
+            if 'NN' in tag:
+                sents = self.article.findword(word)
+                print word
+                for sent in sents:
+                    if sent not in relevant_sentences:
+                        relevant_sentences[sent] = 1
+                    else:
+                        relevant_sentences[sent] += 1
+        print relevant_sentences
+        best_indices = sorted(relevant_sentences.keys(),key= lambda x : relevant_sentences[x], reverse=True)
+        max = 0
+        top = []
+        for ind in best_indices:
+            count = relevant_sentences[ind]
+            if count > max:
+                top = [ind]
+                max = count
+            elif count == max:
+                top.append(ind)
 
-inst = Information_Retrieval('article.htm')
-print(len(inst.parse_html()))
+        best_sentences = [self.article.sentences[x] for x in top]
+        return best_sentences
+
+
+inst = Information_Retrieval('a10.txt')
+
+with open('q.txt') as f:
+    i = 0
+    for line in f.readlines():
+        question = line.split('\t')[0]
+        info = Question(question, i)
+        i+=1
+        print inst.ranked_list(info)

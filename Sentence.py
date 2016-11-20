@@ -6,7 +6,7 @@ from nltk.tag.stanford import StanfordNERTagger
 dir = '/Users/warfajibril/PycharmProjects/NLPProject/'
 
 
-class Sentence(object):
+class Sentence:
 
     def __init__(self, raw_sentence, id):
         self.id = id
@@ -30,7 +30,7 @@ class Sentence(object):
         os.environ['CLASSPATH'] = dir+'stanford-ner'
         return StanfordNERTagger(dir+'stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz').tag(self.tokenized_text)
 
-
+'''
 
 with open('q.txt') as f:
     i = 0
@@ -42,3 +42,4 @@ with open('q.txt') as f:
         print info.pos_tags
         for x in info.parse_tree:
             print x
+'''
