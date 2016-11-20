@@ -15,6 +15,9 @@ class Question(Sentence):
 
 
 
+
+
+
 '''
 
 with open('q.txt') as f:

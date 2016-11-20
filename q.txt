@@ -1,0 +1,44 @@
+Was Alessandro Volta a professor of chemistry?	Alessandro Volta was not a professor of chemistry.	easy	easy	data/set4/a10
+Was Alessandro Volta a professor of chemistry?	No	easy	hard	data/set4/a10
+Did Alessandro Volta invent the remotely operated pistol?	Alessandro Volta did invent the remotely operated pistol.	easy	easy	data/set4/a10
+Did Alessandro Volta invent the remotely operated pistol?	Yes	easy	easy	data/set4/a10
+Was Alessandro Volta taught in public schools?	Volta was taught in public schools.	easy	easy	data/set4/a10
+Was Alessandro Volta taught in public schools?	Yes	easy	easy	data/set4/a10
+Who did Alessandro Volta marry?	Alessandro Volta married Teresa Peregrini.	medium	medium	data/set4/a10
+Who did Alessandro Volta marry?	Teresa Peregrini	medium	medium	data/set4/a10
+What did Alessandro Volta invent in 1800?	In 1800, Alessandro Volta invented the voltaic pile.	medium	easy	data/set4/a10
+What did Alessandro Volta invent in 1800?	voltaic pile	medium	medium	data/set4/a10
+What is the battery made by Alessandro Volta credited as?	The battery made by Volta is credited as the first electrochemical cell.	medium	medium	data/set4/a10
+What is the battery made by Alessandro Volta credited as?	the first electrochemical cell	medium	medium	data/set4/a10
+Did Alessandro Volta die and retire in the same place?	Alessandro Volta retired and died in the same place.	hard	hard	data/set4/a10
+Did Alessandro Volta die and retire in the same place?	Yes	hard	hard	data/set4/a10
+When did Alessandro Volta improve  and popularize the electrophorus?	Alessandro Volta improved and popularized the electrophorus in 1775.	hard	hard	data/set4/a10
+When did Alessandro Volta improve  and popularize the electrophorus?	1775	hard	hard	data/set4/a10
+How long was Alessandro Volta a professor at the University of Pavia?	Alessandro Volta was a professor at the University of Pavia for almost 25 years.	hard	hard	data/set4/a10
+How long was Alessandro Volta a professor at the University of Pavia?	almost 25 years	hard	hard	data/set4/a10
+Was Alessandro Volta an Egyptian?	no	easy	easy	data/set4/a10
+Was Alessandro Volta an Egyptian?	No.	easy	easy	data/set4/a10
+Was Volta taught in public schools?	yes	easy	easy	data/set4/a10
+Was Volta taught in public schools?	Yes.	easy	easy	data/set4/a10
+Was Volta made a count in 1810?	yes	easy	easy	data/set4/a10
+Was Volta made a count in 1810?	No.	easy	easy	data/set4/a10
+Who made Volta a count?	Napoleon	medium	medium	data/set4/a10
+Who made Volta a count?	Napoleon	medium	medium	data/set4/a10
+Where was Volta born?	Como	medium	medium	data/set4/a10
+Where was Volta born?	Como, Italy	medium	medium	data/set4/a10
+When did Volta retire?	1819	medium	medium	data/set4/a10
+When did Volta retire?	In 1819.	medium	medium	data/set4/a10
+A year before improving and popularizing the electrophorus, what did Volta become?	A professor of physics at the Royal School in Como	hard	hard	data/set4/a10
+Was Volta buried where he died or was he buried someplace else?	where he died	hard	hard	data/set4/a10
+Was Volta buried where he died or was he buried someplace else?	Yes.	hard	hard	data/set4/a10
+Did Volta marry before he became professor of experimental physics at the University of Pavia?	no	hard	medium	data/set4/a10
+Did Volta marry before he became professor of experimental physics at the University of Pavia?	No.	hard	hard	data/set4/a10
+What happened in 1810?	Volta was made a count by Napoleon.	NULL	hard	data/set4/a10
+Wasn't Alessandro Volta born in Como?	Yes, Volta was born in Como, Italy and was taught in the public schools there.	NULL	easy	data/set4/a10
+Was Alessandro Volta born in Como?	yes	NULL	easy	data/set4/a10
+Who became a professor of physics at the Royal School in Como?	Volta.	NULL	hard	data/set4/a10
+When was Volta made a count by Napoleon?	Volta was made a count by Napoleon in 1810.	NULL	medium	data/set4/a10
+Is Voltas legacy celebrated by a Temple on the shore of Lake Como in the center of the town?	Yes	NULL	easy	data/set4/a10
+Is the battery made by Volta credited as the first electrochemical cell?	Yes	NULL	easy	data/set4/a10
+Was Volta made a count by Napoleon in 1810?	Yes, Volta was made a count by Napoleon in 1810.	NULL	easy	data/set4/a10
+In what year did he become a professor of physics at the Royal School in Como?	1774	NULL	medium	data/set4/a10

@@ -19,7 +19,7 @@ class Parse:
 	def __init__(self, raw_text):
 		# lines = text.splitlines() # list of text line split by newline delimeter
 		dictionary = {} # maps words to indices
-		sentences = re.split('(?<=[.!?]) +', raw_text) # list that maps indices to sentences
+		sentences = re.split('(?<=[.!?])\n+|(?<=[.!?]) +', raw_text) # list that maps indices to sentences
 		self.dictionary = dictionary
 		self.sentences = sentences
 		for i in xrange(len(sentences)):

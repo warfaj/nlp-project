@@ -43,3 +43,6 @@ with open('q.txt') as f:
         for x in info.parse_tree:
             print x
 '''
+
+
+info = Sentence("What is your name?", 0)
