@@ -9,7 +9,7 @@ from nltk.tree import Tree
 
 #dir = '/Users/warfajibril/PycharmProjects/NLPProject/'
 #dir = '~/Desktop/nlp project/nlp-project-master/'
-dir = ''
+dir = '/Users/Tejas/Desktop/nlp-project-master/'
 class Sentence(object):
     def __init__(self, raw_sentence, id):
         self.id = id
@@ -26,30 +26,44 @@ class Sentence(object):
         parser = stanford.StanfordParser(model_path=dir+"stanford-parser/models/edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz")
         return parser
     def get_ner_tags(self):
+        import nltk
+        nltk.internals.config_java("C:/Program Files/Java/jre1.8.0_111/bin/java.exe")
         os.environ['CLASSPATH'] = dir+'stanford-ner'
         return StanfordNERTagger(dir+'stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz').tag(self.tokenized_text)
 
 
 def whoQuestion(info):
-    s=Sentence(info,0)
-    tags=s.pos_tags
-    result=[]
-    words=word_tokenize(info)
-    for pair in range(len(tags)):
-        if tags[pair][1]=='NNP':
-            question=''
-            person=pair
-            for p in range(len(words)-1):
-                if p!=pair:
-                    question+=words[p]+' '
-                else:
-                    if pair==0:
+    try:
+        s=Sentence(info,0)
+        tags=[item[1] for item in s.pos_tags]
+        result=[]
+        tokens=word_tokenize(info)
+        tokens=tokens[:len(tokens)-1]
+        words=[tokens[0]]
+        for token in range(1,len(tokens)):
+            if tags[token]!='NNP':
+                words+=[tokens[token]]
+            elif tags[token-1]!='NNP' and tags[token+1]!='NNP':
+                words+=[tokens[token]]
+        whoIndex=-1
+        try:
+            whoIndex=tags.index('NNP')
+        except:
+            whoIndex=-1
+        question=''
+        if whoIndex!=-1:
+            for word in range(len(words)):
+                if word==whoIndex:
+                    if word==0:
                         question+='Who '
                     else:
                         question+='who '
-            question+='?'
-            result+=[question]
-    return result
+                else:
+                    question+=words[word]+' '
+        return question+'?'
+    except:
+        return ''
+
 with open('a10.txt') as f:
     for line in f.readlines()[:10]:
         sentences = re.split('(?<=[.!?]) +', line)
@@ -58,7 +72,8 @@ with open('a10.txt') as f:
                 continue 
             s = ''.join(c for c in s if ord(c)<128)
             sent=Sentence(s,0)
-            print(s)
+            #print(s)
             print(whoQuestion(s))
+
 
 
