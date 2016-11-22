@@ -10,10 +10,10 @@ class Sentence:
 
     def __init__(self, raw_sentence, id):
         self.id = id
-        self.raw_text=raw_sentence
-        self.tokenized_text=word_tokenize(raw_sentence)
+        self.raw_text=raw_sentence.strip().decode("ascii","ignore").encode("ascii")
+        self.tokenized_text=word_tokenize(self.raw_text)
         self.parser = self.get_parser()
-        self.parse_tree= self.parser.raw_parse(raw_sentence)
+        self.parse_tree= self.parser.raw_parse(self.raw_text)
         self.pos_tags = pos_tag(self.tokenized_text)
         self.ner_tags = self.get_ner_tags()
 

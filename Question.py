@@ -6,11 +6,12 @@ class Question(Sentence):
     def __init__(self, raw_sentence, id):
         Sentence.__init__(self,raw_sentence, id)
         self.type = self.get_type()
-        self.types = {'who' : 0 }
 
 
     def get_type(self):
-        q_word = self.tokenized_text[0]
+        q_word = self.tokenized_text[0].lower()
+        if q_word in {'is', 'was', 'are', 'were', 'has', 'have', 'had', 'will', 'would', 'can', 'could', 'shall', 'should','did'}:
+            return "YES"
         return q_word
 
 
