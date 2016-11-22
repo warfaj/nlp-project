@@ -36,27 +36,31 @@ def whoQuestion(info):
     try:
         s=Sentence(info,0)
         tags=[item[1] for item in s.pos_tags]
+       # print(tags)
         words=word_tokenize(info)[:len(tags)-1]
         whoIndex=-1
         try:
             whoIndex=tags.index('NNP')
         except:
-            whoIndex=-1
+            return ('',100)
         question=''
+        score=10
         if whoIndex!=-1:
             for word in range(len(words)):
                 if word==whoIndex:
                     if word==0:
+                        score-=4
                         question+='Who '
+                        if len(tags)>1 and (tags[1]=='VBZ' or tags[1]=='VBD'):
+                            score-=5
                     else:
                         question+='who '
                 else:
                     question+=words[word]+' '
-        return question+'?'
+        return (question+'?',score)
     except:
-        return ''
-
-
+        return ('',100)
+'''
 with open('a10.txt') as f:
     for line in f.readlines()[:10]:
         sentences = re.split('(?<=[.!?]) +', line)
@@ -67,5 +71,10 @@ with open('a10.txt') as f:
             sent=Sentence(s,0)
             #print(s)
             print(whoQuestion(s))
+'''
+#s='Gordon was born in Como , Italy and was taught in the public schools there ?'
+#print(whoQuestion(s))
+
+
 
 
