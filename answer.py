@@ -2,6 +2,7 @@ from Question import Question
 from Sentence import Sentence
 from Information_Retrieval import Information_Retrieval
 import nltk
+import sys
 
 
 from nltk.corpus import wordnet as wn
@@ -9,21 +10,29 @@ from nltk.parse import stanford
 
 import string
 
+def main():
+    article = sys.argv[1]
+    questions = sys.argv[2]
+    queston_answering(article,questions)
+
+
+
 def queston_answering(article, questions):
     inst = Information_Retrieval(article)
     with open(questions) as f:
         for line in f.readlines():
-            question_text = line.split('\t')[0] #change to line split on server
-            question = Question(question_text, 0)
-            best_sentence=inst.ranked_list(question)[0]
-            print question_text
-            #if question.type == 'YES':
-                #print answer_binary(question.raw_text,best_sentence)
-            if question.type == 'who':
-                print ans_who(question_text,best_sentence)
-            #if question.type == 'where':
-                #print simple_where(question, best_sentence)
-
+            #try:
+                question_text = line.split('\t')[0] #change to line split on server
+                question = Question(question_text, 0)
+                best_sentence=inst.ranked_list(question)[0]
+                #if question.type == 'YES':
+                print answer_binary(question.raw_text,best_sentence)
+                #if question.type == 'who':
+                    #print ans_who(question_text,best_sentence)
+                #if question.type == 'where':
+                    #print simple_where(question, best_sentence)
+            #except:
+                #print "crash"
 
 
 def answer_binary(question, best_sentence):
@@ -154,10 +163,6 @@ def ans_who(question, best_sentence):
 
 
 
+main()
 
-
-
-
-
-queston_answering('a10.txt','q.txt')
 

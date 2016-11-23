@@ -11,7 +11,7 @@ class Information_Retrieval:
 
     def ranked_list(self, question):
         relevant_sentences = dict()
-        for (word,tag) in question.pos_tags:
+        for (word,tag) in question.get_pos_tags():
             if 'DT' not in tag and '.' not in tag:
                 sents = self.article.findword(word)
                 #print word

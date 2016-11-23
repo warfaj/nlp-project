@@ -6,7 +6,7 @@ from Sentence import Sentence
 
 def generateYesNo(inputStr):
     sent = Sentence(inputStr,0)
-    tagged = sent.pos_tags
+    tagged = sent.get_pos_tags()
     needChange = False
     starts = {'is', 'was', 'are', 'were', 'has', 'have', 'had', 'will', 'would', 'can', 'could', 'shall', 'should'}
     aux_verbs = [i for i, w in enumerate(tagged) if w[0] in starts]
