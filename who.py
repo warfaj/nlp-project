@@ -26,8 +26,8 @@ class Sentence(object):
         parser = stanford.StanfordParser(model_path=dir+"stanford-parser/models/edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz")
         return parser
     def get_ner_tags(self):
-        import nltk
-        nltk.internals.config_java("C:/Program Files/Java/jre1.8.0_111/bin/java.exe")
+        #import nltk
+        #nltk.internals.config_java("C:/Program Files/Java/jre1.8.0_111/bin/java.exe")
         os.environ['CLASSPATH'] = dir+'stanford-ner'
         return StanfordNERTagger(dir+'stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz').tag(self.tokenized_text)
 
@@ -42,7 +42,16 @@ def whoQuestion(info):
         try:
             whoIndex=tags.index('NNP')
         except:
-            return ('',100)
+            try:
+                whoIndex=tags.index('PRP')
+            except:
+                return ('',100)
+        for word in range(whoIndex+1,len(words)):
+            if tags[word-1]=='NNP' and tags[word]=='NNP':
+                words.remove(words[word])
+                tags.remove(tags[word])
+            else:
+                break
         question=''
         score=10
         if whoIndex!=-1:
@@ -72,8 +81,10 @@ with open('a10.txt') as f:
             #print(s)
             print(whoQuestion(s))
 '''
-#s='Gordon was born in Como , Italy and was taught in the public schools there ?'
-#print(whoQuestion(s))
+s='She is my friend.'
+S=Sentence(s,0)
+#print(S.pos_tags)
+print(whoQuestion(s))
 
 
 
