@@ -1,0 +1,38 @@
+Do ants belong to the Hymenoptera order?	yes	easy	easy	data/set1/a1
+Do ants belong to the Hymenoptera order?	yes	easy	easy	data/set1/a1
+Are ants used in cuisine?	yes	easy	easy	data/set1/a1
+Are ants used in cuisine?	yes	easy	medium	data/set1/a1
+Does an ant's head contain sensory organs?	yes	easy	easy	data/set1/a1
+Does an ant's head contain sensory organs?	yes	easy	easy	data/set1/a1
+How do most ants travel?	most ants travel by walking	medium	medium	data/set1/a1
+How do most ants travel?	by walking	medium	easy	data/set1/a1
+In ant colonies, what are the fertile female ants called?	"queens"	medium	medium	data/set1/a1
+In ant colonies, what are the fertile female ants called?	queens	medium	medium	data/set1/a1
+Who wrote about ants in A Tramp Abroad?	mark twain wrote about ants	medium	medium	data/set1/a1
+Who wrote about ants in A Tramp Abroad?	Mark Twain	medium	easy	data/set1/a1
+Do the ants eat plants, meats, or both?	both	hard	too hard	data/set1/a1
+What organs gives a bull ant its good sight?	compound eyes	hard	too hard	data/set1/a1
+What may happen to red fire ants if we use boiling water on the queen?	nests of red fire ants may be destroyed	hard	medium	data/set1/a1
+What may happen to red fire ants if we use boiling water on the queen?	die	hard	too hard	data/set1/a1
+Are ants found in Antartica?	No, there are no ants in antarctica.	easy	easy	data/set1/a1
+Are ants found in Antartica?	NULL	easy	NULL	data/set1/a1
+Do male ants take flight before females?	Yes, male ants take flight before females.	easy	easy	data/set1/a1
+Do male ants take flight before females?	NULL	easy	NULL	data/set1/a1
+Do worker ants have wings?	No, worker ants do not have wings.	easy	easy	data/set1/a1
+Do worker ants have wings?	NULL	easy	NULL	data/set1/a1
+What are the three segments of an ant?	The head, mesosoma and metasoma are the three distinct body segments.	medium	hard	data/set1/a1
+What are the three segments of an ant?	NULL	medium	NULL	data/set1/a1
+What are the ant colonies that lack queens called?	Colonies that lack queens are called gamergate colonies.	medium	medium	data/set1/a1
+What are the ant colonies that lack queens called?	NULL	medium	NULL	data/set1/a1
+Where are bullet ants located?	Bullet ants are located in Central and South America.	medium	medium	data/set1/a1
+Where are bullet ants located?	NULL	medium	NULL	data/set1/a1
+Do ants belong to the same order as bees?	Yes, ants belong to the same order as bees.	hard	medium	data/set1/a1
+Do ants belong to the same order as bees?	NULL	hard	NULL	data/set1/a1
+What is the most common color of ants?	Most ants are red or black.	hard	hard	data/set1/a1
+What is the most common color of ants?	NULL	hard	NULL	data/set1/a1
+Do all ants build nests?	No, not all ants build nests.	hard	medium	data/set1/a1
+Do all ants build nests?	NULL	hard	NULL	data/set1/a1
+Ultraviolet vision was first discovered in ants by Sir who in 1881?	John Lubbok	NULL	medium	data/set1/a1
+Do ants thrive in most ecosystems?	Yes.	NULL	easy	data/set1/a1
+Are several species of ants able to use the Earths magnetic field?	yes	NULL	easy	data/set1/a1
+Are termites actually more closely related to cockroaches as well as mantids?	Yes, termites are actually more closely related to cockroaches as well as mantids.	NULL	easy	data/set1/a1

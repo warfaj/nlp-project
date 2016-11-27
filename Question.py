@@ -33,7 +33,8 @@ class Question(Sentence):
                     pattern += word+' '
                 for i in xrange(len(B)):
                     word = B[i]
-                    if i == 0:
+                    if i == 0 and en.is_verb(word):
+                        print word
                         word = en.verb.past(word)
                     pattern += word +' '
                 pattern = pattern.strip()

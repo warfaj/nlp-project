@@ -1,0 +1,36 @@
+Was Avogadro a  professor at the University of Turin?	Yes	easy	easy	data/set4/a8
+Was Avogadro a  professor at the University of Turin?	Yes, Avogadro was a professor at the University of Turin.	easy	easy	data/set4/a8
+Was he a member of the Royal Superior Council on Public Instruction?	Yes	easy	easy	data/set4/a8
+Was he a member of the Royal Superior Council on Public Instruction?	Yes,  Avogadro was a member of the Royal Superior Council on Public Instruction.	easy	easy	data/set4/a8
+Is Avogadro's number used to compute the results of chemical reactions?	Yes	easy	easy	data/set4/a8
+Is Avogadro's number used to compute the results of chemical reactions?	Yes, Avagadro's number is used to compute the results of chemical reactions.	easy	easy	data/set4/a8
+Who first calculated the value of Avogadro's number?	Johann Josef Loschmidt	medium	medium	data/set4/a8
+Who first calculated the value of Avogadro's number?	Johann Josef Loschmidt first calculated the value of Avogadro's number.	medium	medium	data/set4/a8
+What does Avogadro's Law state?	The relationship between the masses of the same volume of different gases (at the same temperature and pressure) corresponds to the relationship between their respective molecular weights	medium	hard	data/set4/a8
+What does Avogadro's Law state?	Avogadro's Law states that the relationship between the masses of the same volume of different gases (at the same temperature and pressure) corresponds to the relationship between their respective molecular weights.	medium	too hard	data/set4/a8
+Who showed that Avogadro's theory held in dilute solutions?	Jacobus Henricus van Hoff	medium	medium	data/set4/a8
+Who showed that Avogadro's theory held in dilute solutions?	Jacobus Henricus van 't Hoff showed that Avogadro's theory holds in dilute solutions.	medium	medium	data/set4/a8
+In what language was his 1811 paper published?	French	hard	hard	data/set4/a8
+In what language was his 1811 paper published?	Avogadro's 1811 paper was published in French.	hard	hard	data/set4/a8
+Who was Avogadro's wife?	Felicita Mazz	hard	hard	data/set4/a8
+Who was Avogadro's wife?	Felicita MazzÈ was Avogadro's wife.	hard	hard	data/set4/a8
+Why did Avogadro lose his chair at the University of Turin?	He was active in the revolutionary movements of 1821 against the king of Sardinia	hard	hard	data/set4/a8
+Why did Avogadro lose his chair at the University of Turin?	Avogadro lost his chair at the University of Turin because he was active in the revolutionary movements of 1821 against the king of Sardinia.	hard	hard	data/set4/a8
+Was Amedeo Avogadro was born in Turin?	Yes	easy	easy	data/set4/a8
+Was Amedeo Avogadro was born in Turin?	yes	easy	easy	data/set4/a8
+Is Avogadro hailed as a founder of the atomic-molecular theory?	Yes	easy	easy	data/set4/a8
+Is Avogadro hailed as a founder of the atomic-molecular theory?	yes	easy	easy	data/set4/a8
+Did Johann Josef Loschmidt first calculate the value of Avogadro's number?	Yes	easy	easy	data/set4/a8
+Did Johann Josef Loschmidt first calculate the value of Avogadro's number?	yes	easy	easy	data/set4/a8
+In 1820, Avogadro became a professor of physics where?	University of Turin	medium	medium	data/set4/a8
+In 1820, Avogadro became a professor of physics where?	University of Turin	medium	hard	data/set4/a8
+Avogadro did not actually use what word?	atom	medium	medium	data/set4/a8
+Avogadro did not actually use what word?	atom	medium	medium	data/set4/a8
+The number of elementary entities in 1 mole of a substance is known as what?	Avogadro constant	medium	medium	data/set4/a8
+The number of elementary entities in 1 mole of a substance is known as what?	Avogadro's constant	medium	medium	data/set4/a8
+What would a German call Avogadro's number?	Loschmidt number	hard	medium	data/set4/a8
+What would a German call Avogadro's number?	Loschmidt number	hard	hard	data/set4/a8
+Is Amedeo Avogadro Italian?	Yes	hard	easy	data/set4/a8
+Is Amedeo Avogadro Italian?	yes	hard	hard	data/set4/a8
+Did he become a professor before the revolutionary movements against the king of Sardinia?	Yes	hard	hard	data/set4/a8
+Did he become a professor before the revolutionary movements against the king of Sardinia?	yes	hard	hard	data/set4/a8

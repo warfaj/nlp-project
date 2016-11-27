@@ -42,10 +42,18 @@ class Parse:
             w = word
         else:
             w = wn.morphy(strip(word))
-        if w in self.dictionary:
-            return self.dictionary[w]
-        else:
-            return set()
+
+        syns = wn.synsets(word)
+        sents = set([])
+        syn_lemmas = []
+        for synset in syns:
+            syn_lemmas+=synset.lemmas()
+        words = set([s.name() for s in syn_lemmas])
+        for syn in words:
+            if syn in self.dictionary:
+                sents.update(self.dictionary[syn])
+        return set(sents)
+
 
     # given a list of words, returns all indices of sentences containing all the words
     def findwords(self, words):

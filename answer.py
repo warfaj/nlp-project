@@ -16,8 +16,8 @@ reps = ["it", "they", "he", "she"]
 def main():
     #article = sys.argv[1]
     #questions = sys.argv[2]
-    article = 'a10.txt'
-    questions = 'q.txt'
+    article = 'a1.txt'
+    questions = 'q_ant.txt'
     question_answering(article,questions)
 
 
@@ -29,17 +29,21 @@ def question_answering(article, questions):
             #try:
                 question_text = line.split('\t')[0] #change to line split on server
                 question = Question(question_text, 0)
-                #print question_text
+
                 #if question.type == 'YES':
-                    #print answer_binary(question, inst)
-                if question.type == 'WHO':
-                    print answer_who(question, inst)
+                 #   print answer_binary(question, inst)
+                #if question.type == 'WHO':
+                #    print question_text
+                #    print answer_who(question, inst)
                 if question.type == 'WHAT':
-                    print answer_what(question, inst)
-                if question.type == 'WHEN':
-                    print answer_when(question,inst)
-                if question.type == "WHERE":
-                    print answer_where(question,inst)
+                   print question_text
+                   print answer_what(question, inst)
+                #if question.type == 'WHEN':
+                #    print question_text
+                #    print answer_when(question,inst)
+                #if question.type == "WHERE":
+                #    print question_text
+                #    print answer_where(question,inst)
             #except:
                 #print "crash"
 
@@ -59,7 +63,7 @@ def find_tag_answer(pattern, sent, answer_tags, is_when=False):
     default = None
     for ind in xrange(len(tags)):
         (word,tag) = tags[ind]
-        if tag in answer_tags:
+        if tag in answer_tags and word not in pattern.tokenized_text:
             if ind < len(tags) -1:
                 (next_word, next_tag) = tags[ind+1]
                 if next_tag in answer_tags:
@@ -85,6 +89,7 @@ def answer_what(question,inst):
     pattern = Sentence(question.wh_pattern(),0)
     best_sen = inst.ranked_list(pattern)[0]
     info = Sentence(best_sen,0)
+    print question.wh_pattern()
     return best_sen
 
 def answer_when(question, inst):
