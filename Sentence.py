@@ -29,6 +29,10 @@ class Sentence:
         os.environ['CLASSPATH'] = dir+'stanford-ner'
         return StanfordNERTagger(dir+'stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz').tag(self.tokenized_text)
 
+    def get_when_tags(self):
+        os.environ['CLASSPATH'] = dir+'stanford-ner'
+        return StanfordNERTagger(dir+'stanford-ner/classifiers/english.muc.7class.distsim.crf.ser.gz').tag(self.tokenized_text)
+
     def get_pos_tags(self):
         return pos_tag(self.tokenized_text)
 '''

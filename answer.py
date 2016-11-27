@@ -10,86 +10,102 @@ from nltk.parse import stanford
 
 import string
 
+
+mds = ["did", "do", "does", "di", "do", "doe"]
+reps = ["it", "they", "he", "she"]
 def main():
-    article = sys.argv[1]
-    questions = sys.argv[2]
-    queston_answering(article,questions)
+    #article = sys.argv[1]
+    #questions = sys.argv[2]
+    article = 'a10.txt'
+    questions = 'q.txt'
+    question_answering(article,questions)
 
 
 
-def queston_answering(article, questions):
-    inst = Information_Retrieval(article)
+def question_answering(article, questions):
+    inst = Information_Retrieval(article,True)
     with open(questions) as f:
         for line in f.readlines():
             #try:
                 question_text = line.split('\t')[0] #change to line split on server
                 question = Question(question_text, 0)
-                best_sentence=inst.ranked_list(question)[0]
+                #print question_text
                 #if question.type == 'YES':
-                print answer_binary(question.raw_text,best_sentence)
-                #if question.type == 'who':
-                    #print ans_who(question_text,best_sentence)
-                #if question.type == 'where':
-                    #print simple_where(question, best_sentence)
+                    #print answer_binary(question, inst)
+                if question.type == 'WHO':
+                    print answer_who(question, inst)
+                if question.type == 'WHAT':
+                    print answer_what(question, inst)
+                if question.type == 'WHEN':
+                    print answer_when(question,inst)
+                if question.type == "WHERE":
+                    print answer_where(question,inst)
             #except:
                 #print "crash"
 
 
-def answer_binary(question, best_sentence):
-    #title = title.lower().split(" ")
-    q_vect = sent_to_vect(question.lower())
-    bs_vect = sent_to_vect(best_sentence.lower())
-    count = 0.0
-    for token, cnt in q_vect.items():
-        if token not in bs_vect and (token not in mds):
-            count += 1.0
-    if count/len(q_vect) > 0.5:
-        return "No"
-    negs = ["not", "no", "never"]
-    for neg in negs:
-        if neg in bs_vect:
-            return "No"
-    return "Yes"
+def find_tag_answer(pattern, sent, answer_tags, is_when=False):
+    tokens = pattern.tokenized_text
+    sent_tokens = sent.tokenized_text
+    last = 0
+    for word in tokens:
+        if word in sent_tokens:
+            last = max(sent_tokens.index(word),last)
+    tags = None
+    if is_when:
+        tags = sent.get_when_tags()
+    else:
+        tags = sent.get_ner_tags()
+    default = None
+    for ind in xrange(len(tags)):
+        (word,tag) = tags[ind]
+        if tag in answer_tags:
+            if ind < len(tags) -1:
+                (next_word, next_tag) = tags[ind+1]
+                if next_tag in answer_tags:
+                    default = word +' '+next_word
+                else:
+                    default = word
+            else:
+                default = word
+            if ind > last:
+                break
+    return default
 
-def simple_where(question, best_sentence):
-    s_info = Sentence(best_sentence,0)
-    for (word, tag) in s_info.ner_tags:
-        if tag == 'LOCATION':
-            return word
-    return None
+def answer_who(question, inst):
+    pattern = Sentence(question.wh_pattern(),0)
+    best_sen = inst.ranked_list(pattern)[0]
+    info = Sentence(best_sen,0)
+    answer = find_tag_answer(pattern,info, ['PERSON'])
+    if answer:
+        return answer
+    return inst.default_person
 
-def simple_where(question, best_sentence):
-    s_info = Sentence(best_sentence,0)
-    for (word, tag) in s_info.ner_tags:
-        if tag == 'LOCATION':
-            return word
-    return None
+def answer_what(question,inst):
+    pattern = Sentence(question.wh_pattern(),0)
+    best_sen = inst.ranked_list(pattern)[0]
+    info = Sentence(best_sen,0)
+    return best_sen
+
+def answer_when(question, inst):
+    pattern = Sentence(question.wh_pattern(),0)
+    best_sen = inst.ranked_list(pattern)[0]
+    info = Sentence(best_sen,0)
+    answer = find_tag_answer(pattern,info, ['DATE','TIME'], True)
+    if answer:
+        return answer
+    return "I'm not sure...."
+
+def answer_where(question, inst):
+    best_sen = inst.ranked_list(question)[0]
+    info = Sentence(best_sen,0)
+    answer = find_tag_answer(question,info, ['LOCATION'])
+    if answer:
+        return answer
+    return inst.default_location
 
 
 
-
-
-
-
-
-
-
-mds = ["did", "do", "does", "di", "do", "doe"]
-reps = ["it", "they", "he", "she"]
-ques = "Who thought that Newtonian mechanics was no longer enough to reconcile the laws of classical mechanics"
-BS = "Near the beginning of his career, Einstein thought that Newtonian mechanics was no longer enough to reconcile the laws of classical mechanics with the laws of the electromagnetic field."
-#print('no')
-parser = Sentence(ques, 0)
-stanford = parser.get_parser()
-#print(type(stanford))
-
-#print(stanford.raw_parse_sents("Hi"))
-#make a new NER tagger with stanford's stuff, call it tagger
-#make new stanford parser, call it parser
-def tree_to_sent(tree):
-    if tree == None:
-        return ""
-    return ' '.join(tree.leaves())
 
 def sent_to_vect(sent):
     vect = {}
@@ -108,61 +124,23 @@ def sent_to_vect(sent):
             vect[token] = 1
     return vect
 
-def get_phrases(tree, pattern, reversed, sort):
-    phrases = []
-    for t in tree.subtrees():
-        if t.label() == pattern:
-            phrases.append(t)
-    if sort == True:
-        phrases = sorted(phrases, key=lambda x:len(x.leaves()), reverse=reversed)
-        print phrases
-    return phrases
 
-def get_main_verb(vp):
-    leaves = vp.leaves()
-    return leaves[0]
-
-def sents_to_trees(sentences):
-    return stanford.raw_parse_sents(sentences)
-
-def sent_to_tree(sentence):
-    t = stanford.raw_parse(sentence)
-    return t.next()
-
-def answer_definitions(main_vp, s, verb):
-    nps = get_phrases(main_vp, "NP", True, True)
-    if len(nps)>0:
-        candidates = s.split(" " + verb)
-        if tree_to_sent(nps[0]) in candidates[0]:
-            ans_tree = sent_to_tree(candidates[1])
-        else:
-            ans_tree = sent_to_tree(candidates[0])
-        s_nps = get_phrases(ans_tree, "NP", True, True)
-        if len(s_nps) > 0:
-            return tree_to_sent(s_nps[0])
-        else:
-            return ""
-
-#separating helpers from actual code
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
-
-def ans_who(question, best_sentence):
-    answer = ""
-    qbody = question.replace("Who", "Jacob").replace("?", "")
-    best_sentence = best_sentence.lower()
-    parsed_question = sent_to_tree(qbody)
-    vps = get_phrases(parsed_question, "VP",True, True)
-    main_vp = vps[0]
-    main_vb = get_main_verb(main_vp)
-    ans = answer_definitions(main_vp, best_sentence, main_vb)
-    return ans
-
-
+def answer_binary(question_info, inst):
+    best_sentence=inst.ranked_list(question_info)[0]
+    question = question_info.raw_text
+    #title = title.lower().split(" ")
+    q_vect = sent_to_vect(question.lower())
+    bs_vect = sent_to_vect(best_sentence.lower())
+    count = 0.0
+    for token, cnt in q_vect.items():
+        if token not in bs_vect and (token not in mds):
+            count += 1.0
+    if count/len(q_vect) > 0.5:
+        return "No"
+    negs = ["not", "no", "never"]
+    for neg in negs:
+        if neg in bs_vect:
+            return "No"
+    return "Yes"
 
 main()
-
-
