@@ -16,8 +16,8 @@ reps = ["it", "they", "he", "she"]
 def main():
     #article = sys.argv[1]
     #questions = sys.argv[2]
-    article = 'a1.txt'
-    questions = 'q_ant.txt'
+    article = 'a8.txt'
+    questions = 'q_avo.txt'
     question_answering(article,questions)
 
 
@@ -32,12 +32,12 @@ def question_answering(article, questions):
 
                 #if question.type == 'YES':
                  #   print answer_binary(question, inst)
-                #if question.type == 'WHO':
-                #    print question_text
-                #    print answer_who(question, inst)
-                if question.type == 'WHAT':
-                   print question_text
-                   print answer_what(question, inst)
+                if question.type == 'WHO':
+                    print question_text
+                    print answer_who(question, inst)
+                #if question.type == 'WHAT':
+                #   print question_text
+                #   print answer_what(question, inst)
                 #if question.type == 'WHEN':
                 #    print question_text
                 #    print answer_when(question,inst)

@@ -35,7 +35,8 @@ class Information_Retrieval:
 
     def ranked_list(self, question):
         relevant_sentences = dict()
-        i = 1
+        i = 1.0
+
         for (word,tag) in question.get_pos_tags():
             if 'DT' not in tag and '.' not in tag:
                 sents = self.article.findword(word)
@@ -46,7 +47,32 @@ class Information_Retrieval:
                     else:
                         relevant_sentences[sent] += i
             i+=1
+
+        i = 0.9
+        syn_sentences = dict()
+        for (word,tag) in question.get_pos_tags():
+            if 'DT' not in tag and '.' not in tag:
+                sents = self.article.findword_sym(word)
+                #print word
+                for sent in sents:
+                    if sent not in syn_sentences:
+                        syn_sentences[sent] = i
+                    else:
+                        syn_sentences[sent] += i
+            i+=0.9
+
         #print relevant_sentences
+        (best_sen_reg, max1) = self.find_best_sentences(relevant_sentences)
+        (best_sen_syn, max2) = self.find_best_sentences(syn_sentences)
+
+        if max1 > max2:
+            return best_sen_reg
+        else:
+            return best_sen_syn
+
+
+
+    def find_best_sentences(self,relevant_sentences):
         best_indices = sorted(relevant_sentences.keys(),key= lambda x : relevant_sentences[x], reverse=True)
         max = 0
         top = []
@@ -59,8 +85,7 @@ class Information_Retrieval:
                 top.append(ind)
 
         best_sentences = [Sentence(self.article.sentences[x],0).raw_text for x in top]
-        return sorted(best_sentences,key= lambda x: len(x))
-
+        return (sorted(best_sentences,key= lambda x: len(x)),max)
 '''
 inst = Information_Retrieval('a10.txt')
 
