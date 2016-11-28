@@ -40,25 +40,27 @@ class Information_Retrieval:
         for (word,tag) in question.get_pos_tags():
             if 'DT' not in tag and '.' not in tag:
                 sents = self.article.findword(word)
+                weight = len(sents)
                 #print word
                 for sent in sents:
                     if sent not in relevant_sentences:
-                        relevant_sentences[sent] = i
+                        relevant_sentences[sent] = 1.0/weight
                     else:
-                        relevant_sentences[sent] += i
-            i+=1
+                        relevant_sentences[sent] += 1.0/weight
+            i+=1.0
 
         i = 0.9
         syn_sentences = dict()
         for (word,tag) in question.get_pos_tags():
             if 'DT' not in tag and '.' not in tag:
                 sents = self.article.findword_sym(word)
+                weight = len(sents)
                 #print word
                 for sent in sents:
                     if sent not in syn_sentences:
-                        syn_sentences[sent] = i
+                        syn_sentences[sent] = 1.0/weight
                     else:
-                        syn_sentences[sent] += i
+                        syn_sentences[sent] += 1.0/weight
             i+=0.9
 
         #print relevant_sentences

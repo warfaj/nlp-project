@@ -16,8 +16,8 @@ reps = ["it", "they", "he", "she"]
 def main():
     #article = sys.argv[1]
     #questions = sys.argv[2]
-    article = 'a1.txt'
-    questions = 'q_avo.txt'
+    article = 'a10.txt'
+    questions = 'q.txt'
     question_answering(article,questions)
 
 
@@ -30,20 +30,21 @@ def question_answering(article, questions):
                 question_text = line.split('\t')[0] #change to line split on server
                 question = Question(question_text, 0)
 
-                #if question.type == 'YES':
-                 #   print answer_binary(question, inst)
-                #if question.type == 'WHO':
-                #    print question_text
-                #    print answer_who(question, inst)
-                #if question.type == 'WHAT':
-                #   print question_text
-                #   print answer_what(question, inst)
-                if question.type == 'WHY':
+                if question.type == 'YES':
+                    print question_text
+                    print answer_binary(question, inst)
+                if question.type == 'WHO':
+                    print question_text
+                    print answer_who(question, inst)
+                if question.type == 'WHAT':
                    print question_text
-                   print answer_why(question, inst)
-                #if question.type == 'WHEN':
-                #    print question_text
-                #    print answer_when(question,inst)
+                   print answer_what(question, inst)
+                #if question.type == 'WHY':
+                #   print question_text
+                #   print answer_why(question, inst)
+                if question.type == 'WHEN':
+                    print question_text
+                    print answer_when(question,inst)
                 #if question.type == "WHERE":
                 #    print question_text
                 #    print answer_where(question,inst)
@@ -92,7 +93,6 @@ def answer_what(question,inst):
     pattern = Sentence(question.wh_pattern(),0)
     best_sen = inst.ranked_list(pattern)[0]
     info = Sentence(best_sen,0)
-    print question.wh_pattern()
     return best_sen
 
 def answer_when(question, inst):

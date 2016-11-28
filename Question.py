@@ -23,11 +23,14 @@ class Question(Sentence):
                 phrase = t
                 A = []
                 B = []
+                C = []
                 for sub in phrase:
-                    if sub.label() == 'NP':
+                    if sub.label().startswith('N'):
                         A = sub.leaves()
-                    elif sub.label() == 'VP':
+                    elif sub.label().startswith('V'):
                         B = sub.leaves()
+                    elif sub.label().startswith('S'):
+                        C = sub.leaves()
                 pattern  = ''
                 for word in A:
                     pattern += word+' '
@@ -37,6 +40,8 @@ class Question(Sentence):
                         print word
                         word = en.verb.past(word)
                     pattern += word +' '
+                for word in C:
+                    pattern += word+' '
                 pattern = pattern.strip()
                 break
         return pattern

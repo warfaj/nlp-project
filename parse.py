@@ -10,7 +10,7 @@ def strip(word):
     return w
 
 def splitsentence(sentence):
-    words = sentence.split()
+    words = re.findall(r"[\w']+", sentence)
     for i in xrange(len(words)):
         words[i] = strip(words[i])
     return words
