@@ -162,13 +162,13 @@ def answer_why(question_info, inst):
         ans = " ".join(s_tokens[:s_tokens.index("so")][1:])
     elif "as" in s_tokens:
         ans = " ".join(s_tokens[s_tokens.index("as"):][1:])
-    elif "due to" in s:
+    elif "due to" in s_tokens:
         reason_token = s_tokens[s_tokens.index("due"):]
         reason_token = reason_token[1:]
         if "," in reason_token:
             reason_token = reason_token[:s_tokens.index(",")]
         ans = " ".join(reason_token)
-    elif "in order to" in s:
+    elif "in order to" in s_tokens:
         reason_token = s_tokens[s_tokens.index("order"):]
         reason_token = reason_token[1:]
         if "," in reason_token:
