@@ -1,12 +1,17 @@
 import sys
 import en
 import re
+import copy
 
-from Sentence import Sentence
+from Sentences import Sentences, Sentence
+'''
+from nltk import word_tokenize
+from who import whoQuestion
+from what import whatQuestion
+'''
 
-def generateYesNo(inputStr):
-    sent = Sentence(inputStr,0)
-    tagged = sent.get_pos_tags()
+def yesNoHelper(pos_tag):
+    tagged = copy.deepcopy(pos_tag)
     needChange = False
     starts = {'is', 'was', 'are', 'were', 'has', 'have', 'had', 'will', 'would', 'can', 'could', 'shall', 'should'}
     aux_verbs = [i for i, w in enumerate(tagged) if w[0] in starts]
@@ -48,28 +53,44 @@ def generateYesNo(inputStr):
             ans += word2 + ' '
 
     if not punc:
-        return (4, ans)
+        return (ans, 4)
     elif not proper:
-        return (3, ans)
+        return (ans, 3)
     elif ',' in ans or 'and' in ans:
-        return (2, ans)
+        return (ans, 2)
     else:
-        return (1, ans)
+        return (ans, 1)
+
+def yesNoQuestion(sent):
+    return yesNoHelper(sent.pos_tag)
+
+def whyQuestion(sent):
+    tokens = copy.deepcopy(sent.tokenized_sent)
+    cuz_idx = [i for i, w in enumerate(tokens) if w == 'because']
+    if not cuz_idx:
+        return ('', 10)
+    yesNoPair = yesNoHelper(sent.pos_tag[:cuz_idx[0]])
+    yesNoQues = yesNoPair[0] + ' ?'
+    ans = 'Why ' + yesNoQues[0].lower() + yesNoQues[1:]
+    return (ans, 1)
 
 def main():
     article = sys.argv[1]
     nquestions = sys.argv[2]
-    qs = []
+    t = 2 # types of questions implemented so far
+    q = []
+    for i in xrange(t):
+        q.append([])
     with open(article) as f:
-        for line in f.readlines():
-            sentences = re.split('(?<=[.!?]) +', line)
-            for s in sentences:
-                if s == '' or s.isspace():
-                    continue
-                s = ''.join(c for c in s if ord(c)<128)
-                qs.append(generateYesNo(s))
-    sorted_qs = sorted(qs, key=lambda x: x[0])
+        raw_sentences = f.read()
+        sents = Sentences(raw_sentences)
+        for k in xrange(sents.size):
+            sent = Sentence(sents, k)
+            q[0].append(yesNoQuestion(sent))
+            q[1].append(whyQuestion(sent))
+    for i in xrange(t):
+        q[i] = sorted(q[i], key=lambda x: x[1])
     for i in xrange(int(nquestions)):
-        print sorted_qs[i % len(sorted_qs)][1]
+        print q[i%t][(i/t)%len(q[i%t])][0]
 
 main()
