@@ -14,10 +14,11 @@ import string
 mds = ["did", "do", "does", "di", "do", "doe"]
 reps = ["it", "they", "he", "she"]
 def main():
-    #article = sys.argv[1]
-    #questions = sys.argv[2]
-    article = 'a1.txt'
-    questions = 'q_ant.txt'
+    article = sys.argv[1]
+    questions = sys.argv[2]
+    #article = 'a1.txt'
+    #questions = 'q_ant.txt'
+    print(article)
     question_answering(article,questions)
 
 
@@ -35,9 +36,9 @@ def question_answering(article, questions):
                 #if question.type == 'WHO':
                 #    print question_text
                 #    print answer_who(question, inst)
-                if question.type == 'WHAT':
+                if question.type == 'WHY':
                    print question_text
-                   print answer_what(question, inst)
+                   print answer_why(question, inst)
                 #if question.type == 'WHEN':
                 #    print question_text
                 #    print answer_when(question,inst)
@@ -110,8 +111,6 @@ def answer_where(question, inst):
     return inst.default_location
 
 
-
-
 def sent_to_vect(sent):
     vect = {}
     sent = sent.translate(None, string.punctuation)
@@ -147,5 +146,48 @@ def answer_binary(question_info, inst):
         if neg in bs_vect:
             return "No"
     return "Yes"
+
+def answer_why(question_info, inst):
+    best_sentence=inst.ranked_list(question_info)[0]
+    s_tokens = nltk.word_tokenize((best_sentence.lower()))
+    question = question_info.raw_text
+    ans = ""
+    if "because" in s_tokens:
+        ans = " ".join(s_tokens[s_tokens.index("because"):][1:])
+    elif "since" in s_tokens:
+        ans = " ".join(s_tokens[s_tokens.index("since"):][1:])
+    elif "therefore" in s_tokens:
+        ans = " ".join(s_tokens[:s_tokens.index("therefore")][1:])
+    elif "so" in s_tokens:
+        ans = " ".join(s_tokens[:s_tokens.index("so")][1:])
+    elif "as" in s_tokens:
+        ans = " ".join(s_tokens[s_tokens.index("as"):][1:])
+    elif "due to" in s:
+        reason_token = s_tokens[s_tokens.index("due"):]
+        reason_token = reason_token[1:]
+        if "," in reason_token:
+            reason_token = reason_token[:s_tokens.index(",")]
+        ans = " ".join(reason_token)
+    elif "in order to" in s:
+        reason_token = s_tokens[s_tokens.index("order"):]
+        reason_token = reason_token[1:]
+        if "," in reason_token:
+            reason_token = reason_token[:s_tokens.index(",")]
+        ans = " ".join(reason_token)
+    return ans
+
+def answer_how_many(question_info, inst):
+    best_sentence=inst.ranked_list(question_info)[0]
+    question = question_info.raw_text
+    q_tokens = nltk.tokenize.word_tokenize(question)
+    s_tokens = nltk.tokenize.word_tokenize(best_sentence)
+    target = q_tokens[2]
+
+    t_index = s_tokens.index(target)
+    n_index = t_index-1
+    while n_index >= 0 and (not str.isdigit( s_tokens[n_index])):
+        n_index -= 1
+
+    return s_tokens[n_index] if n_index>=0 else ""
 
 main()
