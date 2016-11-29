@@ -22,7 +22,7 @@ class Sentences:
         # number of sentences
         self.size = len(self.sentences)
         # list of sentences, parse trees, ner_tags, when_tags, and pos_tags, respectively
-        self.parses = get_parses(self.sentences)
+        #self.parses = get_parses(self.sentences)
         self.ner_tags = get_ner_tags(self.tokenized_sents)
         self.when_tags = get_when_tags(self.tokenized_sents)
         self.pos_tags = get_pos_tags(self.tokenized_sents)
@@ -83,7 +83,7 @@ class Sentence:
     def __init__(self, sents, k):
         self.sentence = sents.sentences[k]
         self.tokenized_sent = sents.tokenized_sents[k]
-        self.parse = sents.parses[k]
+        #self.parse = sents.parses[k]
         self.ner_tag = sents.ner_tags[k]
         self.when_tag = sents.when_tags[k]
         self.pos_tag = sents.pos_tags[k]
@@ -98,7 +98,7 @@ for k in xrange(sents.size):
     print '==== Sentence Object', k, '===='
     print sent.sentence
     print sent.tokenized_sent
-    print sent.parse
+    #print sent.parse
     print sent.ner_tag
     print sent.when_tag
     print sent.pos_tag

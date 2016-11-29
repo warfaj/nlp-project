@@ -70,12 +70,12 @@ def whenQuestion(sent):
     while (when[idx][1] in {'DATE', 'TIME'} or when[idx][0] == ','):
         idx += 1
     ans = 'When did '
-    score = 2
+    score = 4
     if sent.pos_tag[idx][1] in {'NNP', 'DT'}:
-        score = 0
+        score = 2
     if sent.pos_tag[idx][1] == 'PRP':
         ans += sent.pronoun + ' '
-        score = 1
+        score = 3
     else:
         ans += when[idx][0] + ' '
     needChange = True
@@ -148,8 +148,8 @@ def whatQuestion(info):
                 people+=[info.pos_tag[word-1][0]]
                 actions+=[info.pos_tag[word][0]]
     for question in range(len(people)):
-        try: questions+=[('What did '+people[question]+' '+en.verb.present(actions[question])+'?',5)]
-        except: questions+=[('What did '+people[question]+' '+actions[question]+'?',10)]
+        try: questions+=[('What did '+people[question]+' '+en.verb.present(actions[question])+'?',1)]
+        except: questions+=[('What did '+people[question]+' '+actions[question]+'?',5)]
     return questions 
 
 def whereQuestion(info):
