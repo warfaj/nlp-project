@@ -116,14 +116,14 @@ def whoQuestion(info):
                 whoIndices+=[tag]
     for whoIndex in whoIndices:
         question=''
-        score=10
+        score=6
         for word in range(len(words)):
             if word==whoIndex:
                 if word==0:
-                    score-=4
+                    score-=2
                     question+='Who '
                     if len(words)>1 and (info.pos_tag[1][1]=='VBZ' or info.pos_tag[1][1]=='VBD'):
-                        score-=5
+                        score-=3
                 else:
                     if word==len(words)-1:
                         question+='who?'
@@ -148,8 +148,8 @@ def whatQuestion(info):
                 people+=[info.pos_tag[word-1][0]]
                 actions+=[info.pos_tag[word][0]]
     for question in range(len(people)):
-        try: questions+=[('What did '+people[question]+' '+en.verb.present(actions[question])+'?',1)]
-        except: questions+=[('What did '+people[question]+' '+actions[question]+'?',5)]
+        try: questions+=[('What did '+people[question]+' '+en.verb.present(actions[question])+'?',4)]
+        except: questions+=[('What did '+people[question]+' '+actions[question]+'?',6)]
     return questions 
 
 def whereQuestion(info):
