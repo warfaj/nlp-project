@@ -11,35 +11,13 @@ from nltk.tree import Tree
 #dir = '~/Desktop/nlp project/nlp-project-master/'
 dir = '/Users/Tejas/Desktop/nlp-project-master/'
 from Sentences import Sentences, Sentence
-def simplify(info,pos):
-    s=Sentence(info,0)
-    posTags=[item[1] for item in s.pos_tag()]
-    nerTags=[item[1] for item in s.ner_tag()]
-    words=s.tokenized_sent[:len(nerTags)-1]
-    if pos not in posTags:
-        return (None,None,None)
-    i=posTags.index(pos)
-    extraWords=[]
-    modifiedPosTags=tags[:i+1]
-    modifiedNerTags=tags[:i+1]
-    for word in range(i+1,len(words)):
-        if posTags[word-1]==pos and posTags[word]==pos:
-            extraWords+=[words[word]]
-        else:
-            modifiedPostags+=[posTags[word]]
-            modifiedNerTags+=[nerTags[word]]
-    for word in extraWords:
-        words.remove(word)
-    return (words,modifiedPostags,modifiedNerTags)
 def whoQuestion(info):
-    info=info.sentence
-    words,posTags,nerTags=simplify(info,'NNP')
-    if (words,posTags,nerTags)==(None,None,None):return ('',100)
+    words=info.tokenized_sent[:len(info.tokenized_sent)-1]
     whoIndices=[]
     questions=[]
     for pos in ['NNP','PRP']:
-        for tag in range(len(posTags)):
-            if posTags[tag]==pos and nerTags[tag]=='PERSON':
+        for tag in range(len(info.pos_tag)):
+            if info.pos_tag[tag][1]==pos and info.ner_tag[tag][1]=='PERSON':
                 whoIndices+=[tag]
     for whoIndex in whoIndices:
         question=''
@@ -49,7 +27,7 @@ def whoQuestion(info):
                 if word==0:
                     score-=4
                     question+='Who '
-                    if len(posTags)>1 and (posTags[1]=='VBZ' or posTags[1]=='VBD'):
+                    if len(words)>1 and (info.pos_tag[1][1]=='VBZ' or info.pos_tag[1][1]=='VBD'):
                         score-=5
                 else:
                     if word==len(words)-1:
@@ -64,14 +42,12 @@ def whoQuestion(info):
         questions+=[(question,score)]
     return questions
 def whatQuestion(info):
-    s=info
-    posTags=[item[1] for item in s.pos_tag()]
-    nerTags=[item[1] for item in s.ner_tag()]
-    words=s.tokenized_sent[:len(nerTags)-1]
+    words=info.tokenized_sent[:len(info.tokenized_sent)-1]
     whatIndices=[]
     for pos in ['NN','NNS']:
-        if pos in posTags:
-            whatIndices+=[posTags.index(pos)]
+        for tag in range(len(info.pos_tag)):
+            if info.pos_tag[tag][1]==pos:
+                whatIndices+=[tag]
     questions=[]
     for whatIndex in whatIndices:
         question=''
@@ -93,32 +69,28 @@ def whatQuestion(info):
         questions+=[(question,score)]
     return questions
 def whereQuestion(info):
-    s=info
-    posTags=[item[1] for item in s.pos_tag()]
-    nerTags=[item[1] for item in s.ner_tag()]
-    words=s.tokenized_sent[:len(nerTags)-1]
+    words=info.tokenized_sent[:len(info.tokenized_sent)-1]
     whereIndices=[]
     for tag in range(len(posTags)):
-        if posTags[tag]=='LOCATION':
+        if info.pos_tag[tag][1]=='LOCATION':
             whereIndices+=[tag]
     questions=[]
     for whereIndex in whereIndices:
         question=''
         score=10
-        if whereIndex!=-1:
-            for word in range(len(words)):
-                if word==whereIndex:
-                    if word==0:
-                        question+='Where '
-                    elif word==len(words)-1:
-                        question+='where?'
-                    else:
-                        question+='where '
+        for word in range(len(words)):
+            if word==whereIndex:
+                if word==0:
+                    question+='Where '
+                elif word==len(words)-1:
+                    question+='where?'
                 else:
-                    if word==len(words)-1:
-                        question+=words[word]+'?'
-                    else:
-                        question+=words[word]+' '
+                    question+='where '
+            else:
+                if word==len(words)-1:
+                    question+=words[word]+'?'
+                else:
+                    question+=words[word]+' '
         questions+=[(question,score)]
     return questions
 '''
