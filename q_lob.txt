@@ -1,0 +1,18 @@
+Are lobsters invertebrates?	Yes	easy	easy	data/set1/a5
+Are lobsters invertebrates?	Yes	easy	easy	data/set1/a5
+Are lobsters kosher?	No	easy	easy	data/set1/a5
+Are lobsters kosher?	No	easy	easy	data/set1/a5
+Do lobsters have blue blood?	yes	easy	easy	data/set1/a5
+Do lobsters have blue blood?	Yes	easy	easy	data/set1/a5
+How many legs do lobsters have?	10.	medium	medium	data/set1/a5
+How many legs do lobsters have?	10	medium	medium	data/set1/a5
+Where are lobsters found?	In all oceans.	medium	medium	data/set1/a5
+Where are lobsters found?	In all oceans	medium	medium	data/set1/a5
+What is the mean level of mercury in American lobsters?	0.31 ppm	medium	medium	data/set1/a5
+What is the mean level of mercury in American lobsters?	0.31 ppm	medium	medium	data/set1/a5
+Do lobsters feel pain?	yes.	hard	medium	data/set1/a5
+Do lobsters feel pain?	Yes	hard	medium	data/set1/a5
+Did the Moche people worship lobsters?	yes.	hard	hard	data/set1/a5
+Did the Moche people worship lobsters?	Yes	hard	easy	data/set1/a5
+What is the caridoid escape reaction?	Swimming backwards quickly by curling and uncurling their abdomen.	hard	hard	data/set1/a5
+What is the caridoid escape reaction?	When lobsters swim backwards quickly by curling and uncurling their abdomen	hard	hard	data/set1/a5

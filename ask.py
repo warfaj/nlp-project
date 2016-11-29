@@ -205,6 +205,7 @@ def main():
             except: pass
         q = sorted(q, key=lambda x: x[1])
     for i in xrange(int(nquestions)):
-        print q[i%len(q)][0]
+        try: print q[i%len(q)][0].replace(" ","\xc2\xa0")
+        except: print q[i%len(q)][0]
 
 main()

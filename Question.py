@@ -18,6 +18,7 @@ class Question(Sentence):
     def wh_pattern(self):
         tree = self.get_parse().next()
         phrase = None
+        pattern  = self.raw_text
         for t in tree.subtrees():
             if t.label() == 'SQ':
                 phrase = t
@@ -31,13 +32,12 @@ class Question(Sentence):
                         B = sub.leaves()
                     elif sub.label().startswith('S'):
                         C = sub.leaves()
-                pattern  = ''
+                pattern = ''
                 for word in A:
                     pattern += word+' '
                 for i in xrange(len(B)):
                     word = B[i]
                     if i == 0 and en.is_verb(word):
-                        print word
                         word = en.verb.past(word)
                     pattern += word +' '
                 for word in C:

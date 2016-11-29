@@ -14,10 +14,10 @@ import string
 mds = ["did", "do", "does", "di", "do", "doe"]
 reps = ["it", "they", "he", "she"]
 def main():
-    #article = sys.argv[1]
-    #questions = sys.argv[2]
-    article = 'a10.txt'
-    questions = 'q.txt'
+    article = sys.argv[1]
+    questions = sys.argv[2]
+    #article = 'a5.txt'
+    #questions = 'q_lob.txt'
     question_answering(article,questions)
 
 
@@ -26,30 +26,25 @@ def question_answering(article, questions):
     inst = Information_Retrieval(article,True)
     with open(questions) as f:
         for line in f.readlines():
-            #try:
-                question_text = line.split('\t')[0] #change to line split on server
+            try:
+                question_text = line.split('\t')[0].replace("\xc2\xa0", " ") #change to line split on server
                 question = Question(question_text, 0)
-
                 if question.type == 'YES':
-                    print question_text
-                    print answer_binary(question, inst)
-                if question.type == 'WHO':
-                    print question_text
+                    print answer_binary_old(question, inst)
+                elif question.type == 'WHO':
                     print answer_who(question, inst)
-                if question.type == 'WHAT':
-                   print question_text
+                elif question.type == 'WHAT':
                    print answer_what(question, inst)
-                #if question.type == 'WHY':
-                #   print question_text
-                #   print answer_why(question, inst)
-                if question.type == 'WHEN':
-                    print question_text
+                elif question.type == 'WHY':
+                   print answer_why(question, inst)
+                elif question.type == 'WHEN':
                     print answer_when(question,inst)
-                #if question.type == "WHERE":
-                #    print question_text
-                #    print answer_where(question,inst)
-            #except:
-                #print "crash"
+                elif question.type == "WHERE":
+                    print answer_where(question,inst)
+                else:
+                    print inst.ranked_list(question)[0]
+            except:
+                print "I'm not sure.."
 
 
 def find_tag_answer(pattern, sent, answer_tags, is_when=False):
@@ -102,15 +97,13 @@ def answer_when(question, inst):
     answer = find_tag_answer(pattern,info, ['DATE','TIME'], True)
     if answer:
         return answer
-    return "I'm not sure...."
+    return best_sen
 
 def answer_where(question, inst):
     best_sen = inst.ranked_list(question)[0]
     info = Sentence(best_sen,0)
-    answer = find_tag_answer(question,info, ['LOCATION'])
-    if answer:
-        return answer
-    return inst.default_location
+    answer = find_tag_answer(question,info, ['LOCATION', 'ORGANIZATION'])
+    return best_sen
 
 
 def sent_to_vect(sent):
@@ -131,7 +124,7 @@ def sent_to_vect(sent):
     return vect
 
 
-def answer_binary(question_info, inst):
+def answer_binary_old(question_info, inst):
     best_sentence=inst.ranked_list(question_info)[0]
     question = question_info.raw_text
     #title = title.lower().split(" ")
@@ -148,6 +141,26 @@ def answer_binary(question_info, inst):
         if neg in bs_vect:
             return "No"
     return "Yes"
+
+def answer_binary(question, inst):
+    best_sentence=inst.ranked_list(question)[0]
+    best_sen_info = Sentence(best_sentence, 0)
+    pattern = Sentence(question.wh_pattern(),0)
+    for (word,tag) in pattern.get_pos_tags():
+        if tag.startswith('N') or tag.startswith('V'):
+            seen = len(inst.article.findword(word))
+            if seen == 0:
+                print word,tag
+                return 'No'
+    negs = ["not", "no", "never", "didn't", "wasn't"]
+    for neg in negs:
+        if neg in best_sentence:
+            return "No"
+
+
+    return 'Yes'
+
+
 
 def answer_why(question_info, inst):
     best_sentence=inst.ranked_list(question_info)[0]

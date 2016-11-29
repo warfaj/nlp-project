@@ -8,7 +8,7 @@ from collections import defaultdict
 class Information_Retrieval:
     def __init__(self, article, saveTags=False):
         self.article_name = article
-        self.raw_text = open(article, 'r').read()
+        self.raw_text = open(article, 'r').read().replace("\xc2\xa0", " ")
         self.article = Parse(self.raw_text)
         self.default_person = None
         self.default_location = None
@@ -35,7 +35,6 @@ class Information_Retrieval:
 
     def ranked_list(self, question):
         relevant_sentences = dict()
-        i = 1.0
 
         for (word,tag) in question.get_pos_tags():
             if 'DT' not in tag and '.' not in tag:
@@ -47,9 +46,7 @@ class Information_Retrieval:
                         relevant_sentences[sent] = 1.0/weight
                     else:
                         relevant_sentences[sent] += 1.0/weight
-            i+=1.0
 
-        i = 0.9
         syn_sentences = dict()
         for (word,tag) in question.get_pos_tags():
             if 'DT' not in tag and '.' not in tag:
@@ -61,7 +58,6 @@ class Information_Retrieval:
                         syn_sentences[sent] = 1.0/weight
                     else:
                         syn_sentences[sent] += 1.0/weight
-            i+=0.9
 
         #print relevant_sentences
         (best_sen_reg, max1) = self.find_best_sentences(relevant_sentences)
