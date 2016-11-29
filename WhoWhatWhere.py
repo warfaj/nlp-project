@@ -10,87 +10,68 @@ from nltk.tree import Tree
 #dir = '/Users/warfajibril/PycharmProjects/NLPProject/'
 #dir = '~/Desktop/nlp project/nlp-project-master/'
 dir = '/Users/Tejas/Desktop/nlp-project-master/'
-class Sentence(object):
-    def __init__(self, raw_sentence, id):
-        self.id = id
-        self.raw_text=raw_sentence
-        self.tokenized_text=word_tokenize(raw_sentence)
-        #self.parser = self.get_parser()
-        #self.parse_tree= self.parser.raw_parse(raw_sentence)
-        self.pos_tags = pos_tag(self.tokenized_text)
-        self.ner_tags = self.get_ner_tags()
-    def get_parser(self):
-        os.environ['CLASSPATH'] = dir+'stanford-parser'
-        os.environ['STANFORD_PARSER'] = dir+'stanford-parser/stanford-parser.jar'
-        os.environ['STANFORD_MODELS'] = dir+'stanford-parser/stanford-parser-3.6.0-models.jar'
-        parser = stanford.StanfordParser(model_path=dir+"stanford-parser/models/edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz")
-        return parser
-    def get_ner_tags(self):
-        import nltk
-        nltk.internals.config_java("C:/Program Files/Java/jre1.8.0_111/bin/java.exe")
-        os.environ['CLASSPATH'] = dir+'stanford-ner'
-        return StanfordNERTagger(dir+'stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz').tag(self.tokenized_text)
+from Sentences import Sentences, Sentence
 def simplify(info,pos):
     s=Sentence(info,0)
-    tags=[item[1] for item in s.pos_tags]
-    words=word_tokenize(info)[:len(tags)-1]
-    i=tags.index(pos)
+    posTags=[item[1] for item in s.get_pos_tags()]
+    nerTags=[item[1] for item in s.get_ner_tags()]
+    words=s.tokenized_text(info)[:len(nerTags)-1]
+    if pos not in posTags:
+        return (None,None,None)
+    i=posTags.index(pos)
     extraWords=[]
-    ntags=tags[:i+1]
+    modifiedPosTags=tags[:i+1]
+    modifiedNerTags=tags[:i+1]
     for word in range(i+1,len(words)):
-        if tags[word-1]==pos and tags[word]==pos:
+        if posTags[word-1]==pos and posTags[word]==pos:
             extraWords+=[words[word]]
         else:
-            ntags+=[tags[word]]
+            modifiedPostags+=[posTags[word]]
+            modifiedNerTags+=[nerTags[word]]
     for word in extraWords:
         words.remove(word)
-    return (words,ntags)
+    return (words,modifiedPostags,modifiedNerTags)
 def whoQuestion(info):
-    words,tags=simplify(info,'NNP')
+    info=info.raw_text
+    words,posTags,nerTags=simplify(info,'NNP')
+    if (words,posTags,nerTags)==(None,None,None):return ('',100)
     whoIndices=[]
     questions=[]
     for pos in ['NNP','PRP']:
-        for tag in range(len(tags)):
-            if tags[tag]==pos:
+        for tag in range(len(posTags)):
+            if posTags[tag]==pos and nerTags[tag]=='PERSON':
                 whoIndices+=[tag]
-    for word in range(whoIndices[0]+1,len(words)):
-        if tags[word-1]=='NNP' and tags[word]=='NNP':
-            words.remove(words[word])
-            tags.remove(tags[word])
-            whoIndices.remove(word)
-        else:
-            break
     for whoIndex in whoIndices:
         question=''
         score=10
-        if whoIndex!=-1:
-            for word in range(len(words)):
-                if word==whoIndex:
-                    if word==0:
-                        score-=4
-                        question+='Who '
-                        if len(tags)>1 and (tags[1]=='VBZ' or tags[1]=='VBD'):
-                            score-=5
-                    else:
-                        if word==len(words)-1:
-                            question+='who?'
-                        else:
-                            question+='who '
+        for word in range(len(words)):
+            if word==whoIndex:
+                if word==0:
+                    score-=4
+                    question+='Who '
+                    if len(posTags)>1 and (posTags[1]=='VBZ' or posTags[1]=='VBD'):
+                        score-=5
                 else:
                     if word==len(words)-1:
-                            question+=words[word]+'?'
+                        question+='who?'
                     else:
-                        question+=words[word]+' '
+                        question+='who '
+            else:
+                if word==len(words)-1:
+                        question+=words[word]+'?'
+                else:
+                    question+=words[word]+' '
         questions+=[(question,score)]
     return questions
 def whatQuestion(info):
-    s=Sentence(info,0)
-    tags=[item[1] for item in s.pos_tags]
-    words=word_tokenize(info)[:len(tags)-1]
+    s=info
+    posTags=[item[1] for item in s.get_pos_tags()]
+    nerTags=[item[1] for item in s.get_ner_tags()]
+    words=s.tokenized_text(info)[:len(nerTags)-1]
     whatIndices=[]
     for pos in ['NN','NNS']:
-        if pos in tags:
-            whatIndices+=[tags.index(pos)]
+        if pos in posTags:
+            whatIndices+=[posTags.index(pos)]
     questions=[]
     for whatIndex in whatIndices:
         question=''
@@ -112,13 +93,13 @@ def whatQuestion(info):
         questions+=[(question,score)]
     return questions
 def whereQuestion(info):
-    s=Sentence(info,0)
-    tags=[item[1] for item in s.ner_tags]
-   # print(s.ner_tags)
-    words=word_tokenize(info)
+    s=info
+    posTags=[item[1] for item in s.get_pos_tags()]
+    nerTags=[item[1] for item in s.get_ner_tags()]
+    words=s.tokenized_text(info)[:len(nerTags)-1]
     whereIndices=[]
-    for tag in range(len(tags)):
-        if tags[tag]=='LOCATION':
+    for tag in range(len(posTags)):
+        if posTags[tag]=='LOCATION':
             whereIndices+=[tag]
     questions=[]
     for whereIndex in whereIndices:
@@ -152,5 +133,10 @@ with open('a10.txt') as f:
             #print(s)
             print(whoQuestion(s))
 '''
-
+s='Thomas Alva Edison met John F Kennedy. Max was born in Mexico. Bob ate an apple.'
+S=Sentences(s)
+sent1=Sentence(S,0)
+sent2=Sentence(S,1)
+sent3=Sentence(S,2)
+print(whoQuestion(sent1),whereQuestion(sent2),whatQuestion(sent3))
 
