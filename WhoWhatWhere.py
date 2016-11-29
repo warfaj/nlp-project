@@ -13,9 +13,9 @@ dir = '/Users/Tejas/Desktop/nlp-project-master/'
 from Sentences import Sentences, Sentence
 def simplify(info,pos):
     s=Sentence(info,0)
-    posTags=[item[1] for item in s.get_pos_tags()]
-    nerTags=[item[1] for item in s.get_ner_tags()]
-    words=s.tokenized_text(info)[:len(nerTags)-1]
+    posTags=[item[1] for item in s.pos_tag()]
+    nerTags=[item[1] for item in s.ner_tag()]
+    words=s.tokenized_sent[:len(nerTags)-1]
     if pos not in posTags:
         return (None,None,None)
     i=posTags.index(pos)
@@ -32,7 +32,7 @@ def simplify(info,pos):
         words.remove(word)
     return (words,modifiedPostags,modifiedNerTags)
 def whoQuestion(info):
-    info=info.raw_text
+    info=info.sentence
     words,posTags,nerTags=simplify(info,'NNP')
     if (words,posTags,nerTags)==(None,None,None):return ('',100)
     whoIndices=[]
@@ -65,9 +65,9 @@ def whoQuestion(info):
     return questions
 def whatQuestion(info):
     s=info
-    posTags=[item[1] for item in s.get_pos_tags()]
-    nerTags=[item[1] for item in s.get_ner_tags()]
-    words=s.tokenized_text(info)[:len(nerTags)-1]
+    posTags=[item[1] for item in s.pos_tag()]
+    nerTags=[item[1] for item in s.ner_tag()]
+    words=s.tokenized_sent[:len(nerTags)-1]
     whatIndices=[]
     for pos in ['NN','NNS']:
         if pos in posTags:
@@ -94,9 +94,9 @@ def whatQuestion(info):
     return questions
 def whereQuestion(info):
     s=info
-    posTags=[item[1] for item in s.get_pos_tags()]
-    nerTags=[item[1] for item in s.get_ner_tags()]
-    words=s.tokenized_text(info)[:len(nerTags)-1]
+    posTags=[item[1] for item in s.pos_tag()]
+    nerTags=[item[1] for item in s.ner_tag()]
+    words=s.tokenized_sent[:len(nerTags)-1]
     whereIndices=[]
     for tag in range(len(posTags)):
         if posTags[tag]=='LOCATION':
