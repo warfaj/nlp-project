@@ -64,6 +64,23 @@ def yesNoHelper(pos_tag):
 def yesNoQuestion(sent):
     return yesNoHelper(sent.pos_tag)
 
+def whenQuestion(sent):
+    when = sent.when_tag
+    if len(when) <= 2 or when[1][1] not in {'DATE', 'TIME'}:
+        return ('', 10)
+    idx = 1
+    while (when[idx][1] in {'DATE', 'TIME'} or when[idx][0] == ','):
+        idx += 1
+    ans = 'When did '
+    for i in range(idx, len(when)-1):
+        ans += when[i][0] + ' '
+    ans += '?'
+    if sent.pos_tag[idx][1] in {'NNP', 'DT'}:
+        return (ans, 1)
+    else:
+        return (ans, 3)
+
+
 def whyQuestion(sent):
     tokens = copy.deepcopy(sent.tokenized_sent)
     cuz_idx = [i for i, w in enumerate(tokens) if w == 'because']
@@ -74,23 +91,26 @@ def whyQuestion(sent):
     ans = 'Why ' + yesNoQues[0].lower() + yesNoQues[1:]
     return (ans, 1)
 
+
+
+
+
+
 def main():
     article = sys.argv[1]
     nquestions = sys.argv[2]
-    t = 2 # types of questions implemented so far
-    q = []
-    for i in xrange(t):
-        q.append([])
+    q = [('What is the article about?',1)]
     with open(article) as f:
         raw_sentences = f.read()
         sents = Sentences(raw_sentences)
         for k in xrange(sents.size):
             sent = Sentence(sents, k)
-            q[0].append(yesNoQuestion(sent))
-            q[1].append(whyQuestion(sent))
-    for i in xrange(t):
-        q[i] = sorted(q[i], key=lambda x: x[1])
+            #q += whoQuestion(sent)
+            q += whatQuestion(sent)
+            #q += whereQuestion(sent)
+        q = sorted(q, key=lambda x: x[1])
     for i in xrange(int(nquestions)):
-        print q[i%t][(i/t)%len(q[i%t])][0]
+        print q[i%len(q)]
+#        print q[i][0]
 
 main()
