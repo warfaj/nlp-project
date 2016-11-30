@@ -14,18 +14,17 @@ import string
 mds = ["did", "do", "does", "di", "do", "doe"]
 reps = ["it", "they", "he", "she"]
 def main():
-<<<<<<< HEAD
+
     #article = sys.argv[1]
     #questions = sys.argv[2]
     article = 'a10.txt'
     questions = 'q.txt'
     print(article)
-=======
+
     article = sys.argv[1]
     questions = sys.argv[2]
     #article = 'a5.txt'
     #questions = 'q_lob.txt'
->>>>>>> 82465b37dae530a1f14746bae9891d77cbfab8b6
     question_answering(article,questions)
 
 def question_answering(article, questions):
@@ -35,7 +34,7 @@ def question_answering(article, questions):
             try:
                 question_text = line.split('\t')[0].replace("\xc2\xa0", " ") #change to line split on server
                 question = Question(question_text, 0)
-<<<<<<< HEAD
+
 
                 #if question.type == 'YES':
                  #   print answer_binary(question, inst)
@@ -53,7 +52,7 @@ def question_answering(article, questions):
                     print answer_why(question,inst)
             #except:
                 #print "crash"
-=======
+
                 if question.type == 'YES':
                     print answer_binary_old(question, inst)
                 elif question.type == 'WHO':
@@ -70,7 +69,7 @@ def question_answering(article, questions):
                     print inst.ranked_list(question)[0]
             except:
                 print "I'm not sure.."
->>>>>>> 82465b37dae530a1f14746bae9891d77cbfab8b6
+
 
 
 def find_tag_answer(pattern, sent, answer_tags, is_when=False):
@@ -193,7 +192,6 @@ def answer_why(question_info, inst):
     question = question_info.raw_text
     print(best_sentence)
     ans = ""
-<<<<<<< HEAD
     words = ["because","so","as","since","therefore"]
     for word in words:
         if word in sentok:
@@ -209,7 +207,7 @@ def answer_why(question_info, inst):
         if "," in rdtok:
             rdtok = rdtok[:sentok.index(",")]
         ans = " ".join(rdtok)
-=======
+
     if "because" in s_tokens:
         ans = " ".join(s_tokens[s_tokens.index("because"):][1:])
     elif "since" in s_tokens:
@@ -232,7 +230,6 @@ def answer_why(question_info, inst):
         if "," in reason_token:
             reason_token = reason_token[:s_tokens.index(",")]
         ans = " ".join(reason_token)
->>>>>>> 82465b37dae530a1f14746bae9891d77cbfab8b6
     return ans
 
 def answer_how_many(question_info, inst):
