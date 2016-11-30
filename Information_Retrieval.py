@@ -8,7 +8,7 @@ from collections import defaultdict
 class Information_Retrieval:
     def __init__(self, article, saveTags=False):
         self.article_name = article
-        self.raw_text = open(article, 'r').read()
+        self.raw_text = open(article, 'r').read().replace("\xc2\xa0", " ")
         self.article = Parse(self.raw_text)
         self.default_person = None
         self.default_location = None
@@ -35,18 +35,42 @@ class Information_Retrieval:
 
     def ranked_list(self, question):
         relevant_sentences = dict()
-        i = 1
+
         for (word,tag) in question.get_pos_tags():
             if 'DT' not in tag and '.' not in tag:
                 sents = self.article.findword(word)
+                weight = len(sents)
                 #print word
                 for sent in sents:
                     if sent not in relevant_sentences:
-                        relevant_sentences[sent] = i
+                        relevant_sentences[sent] = 1.0/weight
                     else:
-                        relevant_sentences[sent] += i
-            i+=1
+                        relevant_sentences[sent] += 1.0/weight
+
+        syn_sentences = dict()
+        for (word,tag) in question.get_pos_tags():
+            if 'DT' not in tag and '.' not in tag:
+                sents = self.article.findword_sym(word)
+                weight = len(sents)
+                #print word
+                for sent in sents:
+                    if sent not in syn_sentences:
+                        syn_sentences[sent] = 1.0/weight
+                    else:
+                        syn_sentences[sent] += 1.0/weight
+
         #print relevant_sentences
+        (best_sen_reg, max1) = self.find_best_sentences(relevant_sentences)
+        (best_sen_syn, max2) = self.find_best_sentences(syn_sentences)
+
+        if max1 > max2:
+            return best_sen_reg
+        else:
+            return best_sen_syn
+
+
+
+    def find_best_sentences(self,relevant_sentences):
         best_indices = sorted(relevant_sentences.keys(),key= lambda x : relevant_sentences[x], reverse=True)
         max = 0
         top = []
@@ -59,8 +83,7 @@ class Information_Retrieval:
                 top.append(ind)
 
         best_sentences = [Sentence(self.article.sentences[x],0).raw_text for x in top]
-        return sorted(best_sentences,key= lambda x: len(x))
-
+        return (sorted(best_sentences,key= lambda x: len(x)),max)
 '''
 inst = Information_Retrieval('a10.txt')
 

@@ -10,7 +10,7 @@ def strip(word):
     return w
 
 def splitsentence(sentence):
-    words = sentence.split()
+    words = re.findall(r"[\w']+", sentence)
     for i in xrange(len(words)):
         words[i] = strip(words[i])
     return words
@@ -37,7 +37,7 @@ class Parse:
                     dictionary[token] = {i}
 
     # given a word, returns all indices of sentences that contain the word
-    def findword(self, word):
+    def findword_sym(self, word):
         if word.isdigit():
             w = word
         else:
@@ -54,6 +54,16 @@ class Parse:
                 sents.update(self.dictionary[syn])
         return set(sents)
 
+    def findword(self, word):
+        if word.isdigit():
+            w = word
+        else:
+            w = wn.morphy(strip(word))
+
+        if w in self.dictionary:
+            return self.dictionary[w]
+
+        return set()
 
     # given a list of words, returns all indices of sentences containing all the words
     def findwords(self, words):

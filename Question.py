@@ -18,25 +18,30 @@ class Question(Sentence):
     def wh_pattern(self):
         tree = self.get_parse().next()
         phrase = None
+        pattern  = self.raw_text
         for t in tree.subtrees():
             if t.label() == 'SQ':
                 phrase = t
                 A = []
                 B = []
+                C = []
                 for sub in phrase:
-                    if sub.label() == 'NP':
+                    if sub.label().startswith('N'):
                         A = sub.leaves()
-                    elif sub.label() == 'VP':
+                    elif sub.label().startswith('V'):
                         B = sub.leaves()
-                pattern  = ''
+                    elif sub.label().startswith('S'):
+                        C = sub.leaves()
+                pattern = ''
                 for word in A:
                     pattern += word+' '
                 for i in xrange(len(B)):
                     word = B[i]
                     if i == 0 and en.is_verb(word):
-                        print word
                         word = en.verb.past(word)
                     pattern += word +' '
+                for word in C:
+                    pattern += word+' '
                 pattern = pattern.strip()
                 break
         return pattern
