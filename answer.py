@@ -147,7 +147,7 @@ def s2v(sent):
             vc[token] = 1
     return vc
 
-
+"""
 def answer_binary_old(question_info, inst):
     best_sentence=inst.ranked_list(question_info)[0]
     question = question_info.raw_text
@@ -165,7 +165,7 @@ def answer_binary_old(question_info, inst):
         if neg in bs_vect:
             return "No"
     return "Yes"
-
+"""
 def answer_binary(question, inst):
     best_sentence=inst.ranked_list(question)[0]
     best_sen_info = Sentence(best_sentence, 0)
